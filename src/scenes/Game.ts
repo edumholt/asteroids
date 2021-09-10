@@ -17,8 +17,6 @@ const center: Vec2 = k.vec2(k.width() / 2, k.height() / 2);
 
 const randBetween = (min: number, max: number): number => {
   const diff = max - min;
-  const rand = Math.random() * diff + min;
-  console.log(rand);
   return Math.random() * diff + min;
 };
 
@@ -48,12 +46,14 @@ export const Game = () => {
 
   // Rotate ship left
   k.keyDown('left', () => {
-    flames.angle = ship.angle += 0.04;
+    ship.angle += 0.04;
+    if (flames) flames.angle = ship.angle;
   });
 
   // Rotate ship right
   k.keyDown('right', () => {
-    flames.angle = ship.angle -= 0.04;
+    ship.angle -= 0.04;
+    if(flames) flames.angle = ship.angle;
   });
 
   // Accelerate ship
@@ -99,12 +99,12 @@ export const Game = () => {
         }
       }
     ]) as GameObj & PosComp & VelComp;
-    setTimeout(() => {
+    k.wait(8, () => {
       k.destroy(bullet);
-    }, 2000);
+    });
   });
 
-  // Larg asteroids spawn from left
+  // Large asteroids spawn from left
   setInterval(() => {
     const asteroid = k.add([
       k.sprite('tilesheet', {
