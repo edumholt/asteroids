@@ -1,7 +1,7 @@
-import { AreaComp, GameObj, PosComp, RotateComp, Vec2 } from 'kaboom';
 import k from '../kaboom';
-import { VelComp } from '../components/vel';
-import { vel } from '../components/vel';
+import { rotator } from '../components/rotator';
+import { shooter } from '../components/shooter';
+import { thruster } from '../components/thruster';
 
 k.loadSprite('tilesheet', 'assets/simpleSpace_tilesheet.png', {
   sliceX: 8,
@@ -10,20 +10,17 @@ k.loadSprite('tilesheet', 'assets/simpleSpace_tilesheet.png', {
 
 k.loadSprite('background', 'assets/spaceBackground.png');
 
-let flames: GameObj;
-let bullet: GameObj & PosComp;
-
-const center: Vec2 = k.vec2(k.width() / 2, k.height() / 2);
-
-const randBetween = (min: number, max: number): number => {
-  const diff = max - min;
-  return Math.random() * diff + min;
-};
-
 export const Game = () => {
+  const center = k.vec2(k.width() / 2, k.height() / 2);
+
+  const randBetween = (min: number, max: number): number => {
+    const diff = max - min;
+    return Math.random() * diff + min;
+  };
+
   console.log('* * * Game Screen * * *');
 
-  const bg = k.add([k.sprite('background'), k.scale(), k.origin('topleft')]);
+  k.add([k.sprite('background'), k.scale(), k.origin('topleft')]);
 
   const ship = k.add([
     k.sprite('tilesheet', {
@@ -32,109 +29,32 @@ export const Game = () => {
     k.pos(center),
     k.rotate(0),
     k.origin('center'),
-    vel(0, 0),
-    {
-      vel: {
-        x: 0,
-        y: 0
-      }
-    }
-  ]) as GameObj & AreaComp & PosComp & RotateComp & VelComp;
-
-  const flameOffset = ship.areaWidth() * 0.01;
-  const bulletOffset = ship.areaWidth() * 0.4;
-
-  // Rotate ship left
-  k.keyDown('left', () => {
-    ship.angle += 0.04;
-    if (flames) flames.angle = ship.angle;
-  });
-
-  // Rotate ship right
-  k.keyDown('right', () => {
-    ship.angle -= 0.04;
-    if(flames) flames.angle = ship.angle;
-  });
-
-  // Accelerate ship
-  k.keyPress('up', () => {
-    flames = k.add([
-      k.sprite('tilesheet', {
-        frame: 47
-      }),
-      k.origin(k.vec2(0, -2.2)),
-      k.rotate(ship.angle),
-      k.scale(0.6),
-      vel(-Math.sin(ship.angle), -Math.cos(ship.angle)),
-      {
-        vel: {
-          x: 0,
-          y: 0
-        }
-      },
-      k.pos(ship.pos.x + flameOffset * Math.sin(ship.angle), ship.pos.y + flameOffset * Math.cos(ship.angle))
-    ]) as GameObj & RotateComp & VelComp;
-    ship.vel.x = -Math.sin(ship.angle);
-    ship.vel.y = -Math.cos(ship.angle);
-  });
-
-  k.keyRelease('up', () => {
-    k.destroy(flames);
-  });
-
-  // Fire Bullets
-  k.keyPress('space', () => {
-    bullet = k.add([
-      k.sprite('tilesheet', {
-        frame: 31
-      }),
-      k.origin('center'),
-      k.pos(ship.pos.x - bulletOffset * Math.sin(ship.angle), ship.pos.y - bulletOffset * Math.cos(ship.angle)),
-      k.color(1, 0, 0),
-      vel(-5 * Math.sin(ship.angle), -5 * Math.cos(ship.angle)),
-      {
-        vel: {
-          x: 0,
-          y: 0
-        }
-      }
-    ]) as GameObj & PosComp & VelComp;
-    k.wait(8, () => {
-      k.destroy(bullet);
-    });
-  });
+    shooter(),
+    rotator(),
+    thruster()
+  ]);
+ 
+  const astSpeed = k.vec2(randBetween(-2, 2), randBetween(-2, 2));
 
   // Large asteroids spawn from left
-  setInterval(() => {
-    const asteroid = k.add([
+  k.loop(1, () => {
+    const ast = k.add([
       k.sprite('tilesheet', {
         frame: 32
       }),
-      k.pos(randBetween(-10, 0), randBetween(0, 900)),
-      vel(randBetween(-2, 2), randBetween(-2, 2)),
-      {
-        vel: {
-          x: 0,
-          y: 0
-        }
-      }
-    ]) as GameObj & PosComp & VelComp;
-  }, 3000);
+      k.pos(randBetween(-120, -100), randBetween(0, 900))
+    ]);
+    // TODO: Remove when leave screen
+  });
 
   // Large asteroids spawn from right
-  setInterval(() => {
-    const asteroid = k.add([
+  k.loop(1, () => {
+    k.add([
       k.sprite('tilesheet', {
         frame: 32
       }),
-      k.pos(randBetween(1600, 1610), randBetween(0, 900)),
-      vel(randBetween(-2, 2), randBetween(-2, 2)),
-      {
-        vel: {
-          x: 0,
-          y: 0
-        }
-      }
-    ]) as GameObj & PosComp & VelComp;
-  }, 3000);
+      k.pos(randBetween(1600, 1620), randBetween(0, 900))
+    ]);
+    // TODO: Remove when leave screen
+  });
 };
