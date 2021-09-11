@@ -31,5 +31,18 @@ export const Game = () => {
     thruster()
   ]);
 
-  k.add([asteroids()]);
+  // The baddies (asteroids)
+  k.loop(8, () => {
+    k.add([
+      k.sprite('tilesheet', {
+        frame: 32
+      }),
+      k.rotate(0),
+      k.origin('center'),
+      asteroids(),
+      k.pos(0),
+      k.area(k.vec2(0, 0), k.vec2(64, 64)),
+      'asteroid'
+    ]);
+  });
 };

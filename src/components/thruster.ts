@@ -43,6 +43,12 @@ export const thruster = () => {
       if (flames) flames.pos.y -= yVel;
       xVel *= 0.999;
       yVel *= 0.999;
+
+      // Wrap around screen
+      if(this.pos.x > k.width()) this.pos.x = 0;
+      if(this.pos.x < 0) this.pos.x = k.width();
+      if(this.pos.y > k.height()) this.pos.y = 0;
+      if(this.pos.y < 0) this.pos.y = k.height();
     }
   }
 };
