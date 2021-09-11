@@ -2,7 +2,7 @@ import k from '../kaboom';
 import { rotator } from '../components/rotator';
 import { shooter } from '../components/shooter';
 import { thruster } from '../components/thruster';
-import {asteroids} from '../components/asteroids';
+import { asteroids } from '../components/asteroids';
 
 k.loadSprite('tilesheet', 'assets/simpleSpace_tilesheet.png', {
   sliceX: 8,
@@ -31,7 +31,5 @@ export const Game = () => {
     thruster()
   ]);
 
-  k.add([
-    asteroids()
-  ]);
+  k.add([asteroids()]);
 };
