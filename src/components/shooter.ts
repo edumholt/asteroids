@@ -6,7 +6,7 @@ const bullet = (x: number, y: number) => {
   const vel = k.vec2(x, y);
   return {
     add() {
-      k.wait(1, () => {
+      k.wait(2, () => {
         k.destroy(this);
       });
     },
@@ -45,7 +45,9 @@ export const shooter = () => {
           'bullet'
         ]) as GameObj & AreaComp;
         shot.collides('asteroid', () => {
-          console.log('shot hit target');
+          k.wait(0.1, () => {
+            k.destroy(shot);
+          });
         }) 
       });
     }

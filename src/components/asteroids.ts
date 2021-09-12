@@ -1,12 +1,14 @@
 import { AreaComp, GameObj, PosComp, RotateComp } from 'kaboom';
+
 import k from '../kaboom';
+import { spawnTinyAsteroids } from './tinyAsteroids';
 
 const randBetween = (min: number, max: number): number => {
   const diff = max - min;
   return Math.random() * diff + min;
 };
 
-type Asteroid = GameObj & PosComp & AreaComp & RotateComp;
+export type Asteroid = GameObj & PosComp & AreaComp & RotateComp;
 
 export const asteroids = () => {
   const astSpeed = k.vec2(randBetween(-2, 2), randBetween(-2, 2));
@@ -14,7 +16,9 @@ export const asteroids = () => {
   return {
     add(this: Asteroid) {
       this.collides('bullet', () => {
-        console.log('target hit by shot');
+        console.log('this asteroid hit by bullet: ', this);
+        spawnTinyAsteroids(this);
+        k.destroy(this);
       });
     },
     update(this: Asteroid) {
