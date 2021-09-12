@@ -20,7 +20,7 @@ export const thruster = () => {
 
         xVel += Math.sin(this.angle) * 0.2;
         yVel += Math.cos(this.angle) * 0.2;
-        
+        k.play('thruster');
         flames = k.add([
           k.sprite('tilesheet', {
             frame: 47

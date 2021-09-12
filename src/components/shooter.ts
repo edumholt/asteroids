@@ -33,6 +33,7 @@ export const shooter = () => {
 
         const pos = k.vec2(this.pos.x - bulletOffset * angleCos, this.pos.y - bulletOffset * angleSin);
 
+        k.play('shot');
         const shot = k.add([
           k.sprite('tilesheet', {
             frame: 31
@@ -40,7 +41,7 @@ export const shooter = () => {
           k.origin('center'),
           k.pos(pos),
           k.color(1, 0, 0),
-          k.area(this.area.p1, this.area.p2),
+          k.area(k.vec2(-8, -8), k.vec2(8, 8)),
           bullet(-angleCos * 10, -angleSin * 10),
           'bullet'
         ]) as GameObj & AreaComp;

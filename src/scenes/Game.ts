@@ -11,6 +11,9 @@ k.loadSprite('tilesheet', 'assets/simpleSpace_tilesheet.png', {
 });
 
 k.loadSprite('background', 'assets/spaceBackground.png');
+k.loadSound('shot', 'assets/shot.mp3');
+k.loadSound('thruster', 'assets/thrusterFire.mp3');
+k.loadSound('explosion', 'assets/explosion.mp3');
 
 export const Game = () => {
   const center = k.vec2(k.width() / 2, k.height() / 2);
@@ -35,11 +38,12 @@ export const Game = () => {
 
   ship.collides('asteroid', () => {
     console.error('* * * DED * * *');
-    k.destroy(ship);
+    k.play('explosion');
+    k.go('gameOver');
   })
 
   // The baddies (asteroids)
-  k.loop(3, () => {
+  k.loop(6, () => {
     const ast = k.add([
       k.sprite('tilesheet', {
         frame: 32
@@ -48,7 +52,7 @@ export const Game = () => {
       k.origin('center'),
       asteroids(),
       k.pos(0),
-      k.area(k.vec2(-1, -1), k.vec2(1, 1)),
+      k.area(k.vec2(-2, -2), k.vec2(4, 4)),
       'asteroid'
     ]);
   });
