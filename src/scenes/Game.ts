@@ -1,36 +1,29 @@
+import { AreaComp, GameObj, PosComp } from 'kaboom';
+
 import k from '../kaboom';
 import { rotator } from '../components/rotator';
 import { shooter } from '../components/shooter';
 import { thruster } from '../components/thruster';
 import { asteroids } from '../components/asteroids';
-import { AreaComp, GameObj, PosComp } from 'kaboom';
 
-k.loadSprite('tilesheet', 'assets/simpleSpace_tilesheet.png', {
-  sliceX: 8,
-  sliceY: 6
-});
-
-k.loadSprite('background', 'assets/spaceBackground.png');
-k.loadSound('shot', 'assets/shot.mp3');
-k.loadSound('thruster', 'assets/thrusterFire.mp3');
-k.loadSound('explosion', 'assets/explosion.mp3');
+const { add, area, go, height, loop, origin, play, pos, rotate, scale, sprite, vec2, width } = k;
 
 export const Game = () => {
-  const center = k.vec2(k.width() / 2, k.height() / 2);
+  const center = vec2(width() / 2, height() / 2);
 
   console.log('* * * Game Screen * * *');
 
-  k.add([k.sprite('background'), k.scale(), k.origin('topleft')]);
+  add([sprite('background'), scale(), origin('topleft')]);
 
   // Our ship
-  const ship = k.add([
-    k.sprite('tilesheet', {
+  const ship = add([
+    sprite('tilesheet', {
       frame: 9
     }),
-    k.pos(center),
-    k.rotate(0),
-    k.origin('center'),
-    k.area(k.vec2(-32, -32), k.vec2(32, 32)),
+    pos(center),
+    rotate(0),
+    origin('center'),
+    area(vec2(-32, -32), vec2(32, 32)),
     shooter(),
     rotator(),
     thruster()
@@ -38,21 +31,21 @@ export const Game = () => {
 
   ship.collides('asteroid', () => {
     console.error('* * * DED * * *');
-    k.play('explosion');
-    k.go('gameOver');
-  })
+    play('explosion');
+    go('gameOver');
+  });
 
   // The baddies (asteroids)
-  k.loop(6, () => {
-    const ast = k.add([
-      k.sprite('tilesheet', {
+  loop(6, () => {
+    const ast = add([
+      sprite('tilesheet', {
         frame: 32
       }),
-      k.rotate(0),
-      k.origin('center'),
+      rotate(0),
+      origin('center'),
       asteroids(),
-      k.pos(0),
-      k.area(k.vec2(-2, -2), k.vec2(4, 4)),
+      pos(0),
+      area(vec2(-2, -2), vec2(4, 4)),
       'asteroid'
     ]);
   });

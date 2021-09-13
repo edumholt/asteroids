@@ -1,15 +1,16 @@
-import { Vec2 } from 'kaboom';
 import k from '../kaboom';
 
-const center: Vec2 = k.vec2(k.width() / 2, k.height() / 2);
+const { add, color, height, origin, pos, rgb, text, vec2, width } = k;
+
+const center = vec2(width() / 2, height() / 2);
 
 export const Welcome = () => {
   console.log('* * * Welcome Screen * * *');
 
-  k.add([
-    k.pos(center),
-    k.color(k.rgb(0.3, 0.3, 1)),
-    k.origin('center'),
-    k.text('* * * * * * * * *\n\nWELCOME\n\nto the\n\nJUNGLE!!\n\n* * * * * * * * *', 16)
+  add([
+    pos(center),
+    color(rgb(0.3, 0.3, 1)),
+    origin('center'),
+    text('* * * * * * * * *\n\nWELCOME\n\nto the\n\nJUNGLE!!\n\n* * * * * * * * *', 16)
   ]);
 };

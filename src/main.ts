@@ -3,15 +3,27 @@ import { Welcome } from './scenes/Welcome';
 import { Game } from './scenes/Game';
 import { GameOver } from './scenes/GameOver';
 
-k.scene('welcome', Welcome);
-k.scene('game', Game);
-k.scene('gameOver', GameOver);
+const { add, color, go, loadSound, loadSprite, scene, start, text, wait,  } = k;
 
-k.scene('main', () => {
-  k.add([k.text('HELLO KABOOM!!', 32), k.color(1, 1, 1, 1)]);
-  k.wait(2, () => {
-    k.go('game');
+loadSprite('tilesheet', 'assets/simpleSpace_tilesheet.png', {
+  sliceX: 8,
+  sliceY: 6
+});
+loadSprite('background', 'assets/spaceBackground.png');
+
+loadSound('shot', 'assets/shot.mp3');
+loadSound('thruster', 'assets/thrusterFire.mp3');
+loadSound('explosion', 'assets/explosion.mp3');
+
+scene('welcome', Welcome);
+scene('game', Game);
+scene('gameOver', GameOver);
+
+scene('main', () => {
+  add([text('HELLO KABOOM!!', 32), color(1, 1, 1, 1)]);
+  wait(2, () => {
+    go('game');
   });
 });
 
-k.start('main');
+start('main');

@@ -5,14 +5,16 @@ import { spawnTinyAsteroids } from './tinyAsteroids';
 
 export type Asteroid = GameObj & PosComp & AreaComp & RotateComp;
 
+const { destroy, rand, vec2,  } = k;
+
 export const asteroids = () => {
-  const astSpeed = k.vec2(k.rand(-2, 2), k.rand(-2, 2));
-  const spin = k.rand(-0.04, 0.04);
+  const astSpeed = vec2(rand(-2, 2), rand(-2, 2));
+  const spin = rand(-0.04, 0.04);
   return {
     add(this: Asteroid) {
       this.collides('bullet', () => {
         spawnTinyAsteroids(this.pos);
-        k.destroy(this);
+        destroy(this);
       });
     },
     update(this: Asteroid) {

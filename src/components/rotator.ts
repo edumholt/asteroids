@@ -2,13 +2,15 @@ import { GameObj, RotateComp } from 'kaboom';
 
 import k from '../kaboom';
 
+const { keyDown } = k;
+
 export const rotator = () => {
   return {
     add(this: GameObj & RotateComp) {
-      k.keyDown('left', () => {
+      keyDown('left', () => {
         this.angle += 0.04;
       });
-      k.keyDown('right', () => {
+      keyDown('right', () => {
         this.angle -= 0.04;
       });
     }
