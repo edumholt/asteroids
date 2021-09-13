@@ -24,7 +24,7 @@ export const thruster = () => {
         yVel += Math.cos(this.angle) * 0.2;
 
         play('thruster');
-        
+
         flames = add([
           sprite('tilesheet', {
             frame: 47

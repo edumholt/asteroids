@@ -5,7 +5,7 @@ import { spawnTinyAsteroids } from './tinyAsteroids';
 
 export type Asteroid = GameObj & PosComp & AreaComp & RotateComp;
 
-const { destroy, rand, vec2,  } = k;
+const { destroy, rand, vec2 } = k;
 
 export const asteroids = () => {
   const astSpeed = vec2(rand(-2, 2), rand(-2, 2));

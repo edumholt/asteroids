@@ -3,7 +3,7 @@ import { Welcome } from './scenes/Welcome';
 import { Game } from './scenes/Game';
 import { GameOver } from './scenes/GameOver';
 
-const { add, color, go, loadSound, loadSprite, scene, start, text, wait,  } = k;
+const { add, color, go, loadSound, loadSprite, scene, start, text, wait } = k;
 
 loadSprite('tilesheet', 'assets/simpleSpace_tilesheet.png', {
   sliceX: 8,

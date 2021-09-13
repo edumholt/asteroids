@@ -51,7 +51,7 @@ export const shooter = () => {
           wait(0.1, () => {
             destroy(shot);
           });
-        }) 
+        });
       });
     }
   };
