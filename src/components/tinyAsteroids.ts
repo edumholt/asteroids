@@ -3,7 +3,7 @@ import { Vec2 } from 'kaboom';
 import k from '../kaboom';
 import { Asteroid } from './asteroids';
 
-const { add, area, destroy, height, origin, pos, rand, rotate, scale, sprite, vec2, wait, width } = k;
+const { add, area, destroy, height, origin, play, pos, rand, rotate, scale, sprite, vec2, wait, width } = k;
 
 const tinyAsteroid = () => {
   const velX = rand(-2, 2);
@@ -13,6 +13,7 @@ const tinyAsteroid = () => {
     add(this: Asteroid) {
       wait(1, () => {
         this.collides('bullet', () => {
+          play('thud');
           destroy(this);
         });
       });

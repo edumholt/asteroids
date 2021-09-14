@@ -6,7 +6,7 @@ import { shooter } from '../components/shooter';
 import { thruster } from '../components/thruster';
 import { asteroids } from '../components/asteroids';
 
-const { add, area, go, height, loop, origin, play, pos, rotate, scale, sprite, vec2, width } = k;
+const { add, area, color, destroy, go, height, loop, origin, play, pos, rotate, scale, sprite, vec2, wait, width, drawText } = k;
 
 export const Game = () => {
   const center = vec2(width() / 2, height() / 2);
@@ -23,16 +23,27 @@ export const Game = () => {
     pos(center),
     rotate(0),
     origin('center'),
-    area(vec2(-32, -32), vec2(32, 32)),
+    area(vec2(-16, -16), vec2(32, 32)),
     shooter(),
     rotator(),
     thruster()
   ]) as GameObj & PosComp & AreaComp;
 
   ship.collides('asteroid', () => {
-    console.error('* * * DED * * *');
     play('explosion');
-    go('gameOver');
+    destroy(ship);
+    add([
+      sprite('tilesheet', {
+        frame: 41
+      }),
+      color(1, 0, 0),
+      scale(3),
+      pos(ship.pos),
+      origin('center')
+    ]);
+    wait(0.5, () => {
+      go('gameOver');
+    });
   });
 
   // The baddies (asteroids)

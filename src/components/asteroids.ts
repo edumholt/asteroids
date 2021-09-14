@@ -5,7 +5,7 @@ import { spawnTinyAsteroids } from './tinyAsteroids';
 
 export type Asteroid = GameObj & PosComp & AreaComp & RotateComp;
 
-const { destroy, rand, vec2 } = k;
+const { destroy, play, rand, vec2 } = k;
 
 export const asteroids = () => {
   const astSpeed = vec2(rand(-2, 2), rand(-2, 2));
@@ -14,6 +14,7 @@ export const asteroids = () => {
     add(this: Asteroid) {
       this.collides('bullet', () => {
         spawnTinyAsteroids(this.pos);
+        play('thud');
         destroy(this);
       });
     },

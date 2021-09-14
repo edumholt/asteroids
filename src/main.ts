@@ -14,6 +14,7 @@ loadSprite('background', 'assets/spaceBackground.png');
 loadSound('shot', 'assets/shot.mp3');
 loadSound('thruster', 'assets/thrusterFire.mp3');
 loadSound('explosion', 'assets/explosion.mp3');
+loadSound('thud', 'assets/distant_thud.mp3');
 
 scene('welcome', Welcome);
 scene('game', Game);
