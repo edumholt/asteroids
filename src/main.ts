@@ -10,6 +10,7 @@ loadSprite('tilesheet', 'assets/simpleSpace_tilesheet.png', {
   sliceY: 6
 });
 loadSprite('background', 'assets/spaceBackground.png');
+loadSprite('explosion', 'assets/explosion08.png');
 
 loadSound('shot', 'assets/shot.mp3');
 loadSound('thruster', 'assets/thrusterFire.mp3');

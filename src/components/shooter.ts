@@ -1,8 +1,8 @@
-import { AreaComp, GameObj, PosComp, RotateComp } from 'kaboom';
+import { AreaComp, GameObj, PosComp, RotateComp, TextComp } from 'kaboom';
 
 import k from '../kaboom';
 
-const { add, area, color, destroy, keyPress, origin, play, pos, sprite, vec2, wait } = k;
+const { add, area, color, destroy, keyPress, origin, play, pos, sprite, text, vec2, wait } = k;
 
 const bullet = (x: number, y: number) => {
   const vel = vec2(x, y);
@@ -24,8 +24,12 @@ const bullet = (x: number, y: number) => {
  * @returns GameObj
  */
 export const shooter = () => {
+  let display: GameObj & TextComp;
+  let gameScore = 0;
   return {
     add(this: GameObj & RotateComp & AreaComp & PosComp) {
+      display = add([text(`Score: ${gameScore}`, 32), pos(700, 100), color(0, 1, 0)]) as GameObj & TextComp;
+
       // Fire Bullets
       keyPress('space', () => {
         const bulletOffset = this.areaWidth() * 0.4;
@@ -47,12 +51,17 @@ export const shooter = () => {
           bullet(-angleCos * 10, -angleSin * 10),
           'bullet'
         ]) as GameObj & AreaComp;
+
         shot.collides('asteroid', () => {
           wait(0.1, () => {
             destroy(shot);
+            gameScore += 10;
           });
         });
       });
+    },
+    update() {
+      display.text = `Score: ${gameScore}`;
     }
   };
 };

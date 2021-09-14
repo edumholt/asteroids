@@ -6,7 +6,7 @@ import { shooter } from '../components/shooter';
 import { thruster } from '../components/thruster';
 import { asteroids } from '../components/asteroids';
 
-const { add, area, color, destroy, go, height, loop, origin, play, pos, rotate, scale, sprite, vec2, wait, width, drawText } = k;
+const { add, area, destroy, go, height, loop, origin, play, pos, rotate, scale, sprite, vec2, wait, width } = k;
 
 export const Game = () => {
   const center = vec2(width() / 2, height() / 2);
@@ -33,11 +33,8 @@ export const Game = () => {
     play('explosion');
     destroy(ship);
     add([
-      sprite('tilesheet', {
-        frame: 41
-      }),
-      color(1, 0, 0),
-      scale(3),
+      sprite('explosion'),
+      scale(.5),
       pos(ship.pos),
       origin('center')
     ]);
@@ -60,4 +57,6 @@ export const Game = () => {
       'asteroid'
     ]);
   });
+
+
 };
